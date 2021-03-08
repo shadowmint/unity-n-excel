@@ -1,0 +1,26 @@
+{
+  "name": "unity-n-excel",
+  "version": "0.0.1",
+  "description": "A wrapper of ExcelDataReader for unity",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shadowmint/unity-n-excel.git"
+  },
+  "files": [
+    "index.js",
+    "scripts",
+    "src"
+  ],
+  "author": "douglas.linder@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shadowmint/unity-n-excel/issues"
+  },
+  "homepage": "https://github.com/shadowmint/unity-n-excel",
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+  }
+}
