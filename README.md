@@ -48,7 +48,7 @@ object on the sheet.
 From your unity project folder:
 
     npm init
-    npm install TEMPLATE --save
+    npm install shadowmint/unity-n-excel --save
     echo Assets/pkg-all >> .gitignore
     echo Assets/pkg-all.meta >> .gitignore
 
