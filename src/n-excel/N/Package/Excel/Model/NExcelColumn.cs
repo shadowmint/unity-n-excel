@@ -1,10 +1,9 @@
 namespace N.Package.Excel.Model
 {
-    [System.Serializable]
     public class NExcelColumn
     {
-        public bool isBlank;
-        public int index;
-        public string name;
+        public bool IsBlank { get; set; }
+        public int Index { get; set; }
+        public string Name { get; set; }
     }
 }

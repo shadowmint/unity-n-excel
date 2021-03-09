@@ -59,17 +59,16 @@ namespace N.Package.Excel.Internal
 
         private static void DropBlankRowsAndColumns(NExcelTable table)
         {
-            table.Rows.RemoveAll(i => i.isBlank);
-            var blanks = table.Columns.Where(i => i.isBlank).Select(i => i.name).ToArray();
-            table.Columns.RemoveAll(i => i.isBlank);
+            table.Rows.RemoveAll(i => i.IsBlank);
+            var blanks = table.Columns.Where(i => i.IsBlank).Select(i => i.Name).ToArray();
+            table.Columns.RemoveAll(i => i.IsBlank);
 
             // Patch
             foreach (var row in table.Rows)
             {
                 foreach (var blank in blanks)
                 {
-                    row.schema?.Remove(blank);
-                    row.values?.Remove(blank);
+                    row.Values?.Remove(blank);
                 }
             }
         }
@@ -79,28 +78,26 @@ namespace N.Package.Excel.Internal
             var row = new NExcelRow();
             if (IsEmpty(values))
             {
-                row.isBlank = true;
+                row.IsBlank = true;
                 table.Rows.Add(row);
                 return;
             }
 
-            row.isBlank = true;
-            row.schema = new Dictionary<string, string>();
-            row.values = new Dictionary<string, object>();
+            row.IsBlank = true;
+            row.Values = new Dictionary<string, object>();
             for (var i = 0; i < values.Length; i++)
             {
                 var column = table.Columns[i];
                 var value = GetValue(values, i);
-                row.schema[column.name] = value == null ? "NULL" : value.GetType().ToString();
-                row.values[column.name] = value;
+                row.Values[column.Name] = value;
                 if (value != null)
                 {
-                    row.isBlank = false;
+                    row.IsBlank = false;
                 }
 
-                if (value != null && column.isBlank)
+                if (value != null && column.IsBlank)
                 {
-                    column.isBlank = false;
+                    column.IsBlank = false;
                     table.Columns[i] = column;
                 }
             }
@@ -114,16 +111,16 @@ namespace N.Package.Excel.Internal
             {
                 var value = GetValue(values, i);
                 var name = value == null ? $"Auto-{Guid.NewGuid()}" : $"{value}";
-                if (table.Columns.Any(j => j.name == name))
+                if (table.Columns.Any(j => j.Name == name))
                 {
                     name = $"{name}-{Guid.NewGuid()}";
                 }
 
                 table.Columns.Add(new NExcelColumn()
                 {
-                    index = i,
-                    isBlank = true,
-                    name = name,
+                    Index = i,
+                    IsBlank = true,
+                    Name = name,
                 });
             }
         }
@@ -154,14 +151,14 @@ namespace N.Package.Excel.Internal
         private static List<string> RowAsList(NExcelRow row)
         {
             var values = new List<string>();
-            if (row.isBlank || row.schema == null)
+            if (row.IsBlank || row.Values == null)
             {
                 return values;
             }
 
-            foreach (var key in row.schema.Keys)
+            foreach (var key in row.Values.Keys)
             {
-                values.Add(row.values != null ? $"{key}: {row.values[key]}" : $"{key}: NULL");
+                values.Add(row.Values != null ? $"{key}: {row.Values[key]}" : $"{key}: NULL");
             }
 
             return values;

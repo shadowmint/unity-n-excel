@@ -37,7 +37,7 @@ namespace Tests
             Assert.IsNotNull(sheet);
 
             var table = sheet.LoadTable();
-            Assert.IsTrue(table.Columns.Any(c => c.name == "A"));
+            Assert.IsTrue(table.Columns.Any(c => c.Name == "A"));
         }
 
         [Test]
