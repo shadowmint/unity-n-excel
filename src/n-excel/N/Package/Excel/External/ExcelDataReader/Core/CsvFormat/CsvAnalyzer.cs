@@ -11,7 +11,8 @@ namespace ExcelDataReader.Core.CsvFormat
         /// Uses fallbackEncoding if there is no BOM. Throws DecoderFallbackException if there are invalid characters in the stream.
         /// Returns the separator whose average field count is closest to its max field count.
         /// </summary>
-        public static void Analyze(Stream stream, char[] separators, Encoding fallbackEncoding, int analyzeInitialCsvRows, out int fieldCount, out char autodetectSeparator, out Encoding autodetectEncoding, out int bomLength, out int rowCount)
+        public static void Analyze(Stream stream, char[] separators, Encoding fallbackEncoding, int analyzeInitialCsvRows, out int fieldCount,
+            out char autodetectSeparator, out Encoding autodetectEncoding, out int bomLength, out int rowCount)
         {
             var bufferSize = 1024;
             var probeSize = 16;
@@ -26,7 +27,7 @@ namespace ExcelDataReader.Core.CsvFormat
 
             if (separators == null || separators.Length == 0)
             {
-                separators = new char[] { '\0' };
+                separators = new char[] {'\0'};
             }
 
             var separatorInfos = new SeparatorInfo[separators.Length];
@@ -55,7 +56,7 @@ namespace ExcelDataReader.Core.CsvFormat
                     continue;
                 }
 
-                var average = separatorInfo.SumFieldCount / (double)separatorInfo.RowCount;
+                var average = separatorInfo.SumFieldCount / (double) separatorInfo.RowCount;
                 var dist = separatorInfo.MaxFieldCount - average;
 
                 if (dist < bestDistance)
@@ -71,7 +72,8 @@ namespace ExcelDataReader.Core.CsvFormat
             rowCount = analyzeInitialCsvRows == 0 ? bestSeparatorInfo.RowCount : -1;
         }
 
-        private static void AnalyzeCsvRows(Stream inputStream, byte[] buffer, int initialBytesRead, int bomLength, int analyzeInitialCsvRows, char[] separators, SeparatorInfo[] separatorInfos)
+        private static void AnalyzeCsvRows(Stream inputStream, byte[] buffer, int initialBytesRead, int bomLength, int analyzeInitialCsvRows,
+            char[] separators, SeparatorInfo[] separatorInfos)
         {
             ParseSeparatorsBuffer(buffer, bomLength, initialBytesRead - bomLength, separators, separatorInfos);
 
